@@ -9,6 +9,10 @@ prüfe Annahmen und Unsicherheit und liefere konkrete Ergebnisse. Nutze Websuche
 Behaupte keine nicht ausgeführten Aktionen. Antworte in der Sprache des Nutzers."""
 @app.get("/")
 def home(): return send_from_directory("frontend","index.html")
+@app.get("/engine")
+def engine(): return send_from_directory(".", "game_engine.html")
+@app.get("/game_engine.js")
+def engine_js(): return send_from_directory(".", "game_engine.js")
 @app.get("/health")
 @app.get("/api/health")
 def health(): return jsonify({"status":"ok","project":"Quantum.AI.","model":MODEL,"web_search":WEB,"openai_configured":bool(client)})
