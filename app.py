@@ -2,7 +2,7 @@ import os
 from flask import Flask,jsonify,request,send_from_directory
 from openai import OpenAI
 app=Flask(__name__)
-MODEL=os.getenv("OPENAI_MODEL","gpt-6-astra");WEB=os.getenv("ENABLE_WEB_SEARCH","true").lower()=="true"
+MODEL=os.getenv("OPENAI_MODEL","gpt-5.6");WEB=os.getenv("ENABLE_WEB_SEARCH","true").lower()=="true"
 client=OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
 SYSTEM="""Du bist Quantum.AI, eine eigenständige Spitzen-KI. Arbeite gründlich und strukturiert,
 prüfe Annahmen und Unsicherheit und liefere konkrete Ergebnisse. Nutze Websuche für aktuelle Fakten.
