@@ -1,1 +1,99 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Quantum.AI</title><style>:root{--a:#7c6cff}*{box-sizing:border-box}body{margin:0;background:#0b0b0d;color:#ececef;font:14px Inter,system-ui,sans-serif}.app{height:100vh;display:grid;grid-template-columns:245px 1fr}.side{border-right:1px solid #27272a;padding:14px;background:#101113}.new{width:100%;padding:11px;border:1px solid #303036;border-radius:10px;background:#18181b;color:#fff;text-align:left}.brand{font-weight:800;font-size:17px;margin:14px 4px 22px}.nav{margin-top:18px;color:#a1a1aa;font-size:12px}.nav a{display:block;color:#cfcfd4;text-decoration:none;padding:10px;border-radius:9px;margin:3px 0}.nav a:hover{background:#1b1b1f}.nav .active{background:#1b1b1f;border-left:2px solid var(--a)}.main{display:grid;grid-template-rows:58px 1fr auto}.top{border-bottom:1px solid #27272a;display:flex;align-items:center;padding:0 22px;gap:12px}.model{color:#aaa;border:1px solid #303036;border-radius:999px;padding:5px 9px;font-size:11px}.chat{width:min(880px,92%);margin:auto;height:100%;overflow:auto;padding:30px 0 110px}.welcome{text-align:center;margin:20vh 0 0}.welcome h1{font-size:30px;margin:0 0 10px}.welcome p{color:#9b9ba3}.m{max-width:780px;margin:18px auto;padding:12px 14px;line-height:1.65;white-space:pre-wrap}.user{background:#18181b;border-radius:16px}.ai{border-left:2px solid var(--a)}.composer{width:min(880px,92%);margin:0 auto 18px;display:flex;gap:9px;border:1px solid #3a3a40;border-radius:18px;background:#151518;padding:9px;box-shadow:0 8px 30px #0008}.composer input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:10px;font:inherit}.composer button{border:0;border-radius:12px;background:var(--a);color:#09090b;font-weight:800;padding:0 17px}.engine{border:1px solid #303036;background:#18181b;color:#ddd;border-radius:9px;padding:7px 10px;text-decoration:none;font-size:11px}@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.chat{width:94%}.composer{width:94%}}</style></head><body><div class="app"><aside class="side"><button class="new">＋ Neuer Chat</button><div class="brand">Quantum.AI</div><div class="nav"><a class="active">⌁ Chat</a><a href="/engine">◈ Game Engine</a><a>⌕ Recherche</a><a>▣ Projekte</a><a>⚙ Einstellungen</a></div><div style="position:absolute;bottom:18px;color:#777;font-size:10px">Independent AI · Research · Engineering</div></aside><main class="main"><header class="top"><b>Quantum.AI</b><span class="model">GPT-5.6 Sol · High reasoning</span><a class="engine" href="/engine">Game Engine →</a></header><section class="chat" id="chat"><div class="welcome"><h1>Wie kann ich helfen?</h1><p>Recherche · Reasoning · Coding · Projekte · Game Development</p></div></section><form class="composer"><input id="q" placeholder="Nachricht an Quantum.AI …" autocomplete="off"><button>Senden</button></form></main></div><script>const f=document.querySelector('form'),q=document.querySelector('#q'),c=document.querySelector('#chat');function add(t,k){const e=document.createElement('div');e.className='m '+k;e.textContent=t;c.appendChild(e);c.scrollTop=c.scrollHeight}f.onsubmit=async e=>{e.preventDefault();const x=q.value.trim();if(!x)return;add(x,'user');q.value='';add('Denke …','ai');const w=c.lastChild;try{const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:x})});const d=await r.json();w.remove();add(d.response||d.reply||d.response||d.error||'Keine Antwort','ai')}catch(_){w.remove();add('Verbindung fehlgeschlagen.','ai')}};</script></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quantum.AI</title>
+<style>
+:root{--a:#7c6cff;--bg:#0b0b0d;--panel:#101113;--line:#27272a;--muted:#9b9ba3}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 70% 0%,#19152e 0,#0b0b0d 42%);color:#ececef;font:14px Inter,system-ui,sans-serif}
+.app{height:100vh;display:grid;grid-template-columns:245px 1fr}
+.side{border-right:1px solid var(--line);padding:14px;background:rgba(16,17,19,.9)}
+.new{width:100%;padding:11px;border:1px solid #303036;border-radius:10px;background:#18181b;color:#fff;text-align:left;cursor:pointer}
+.brand{font-weight:800;font-size:17px;margin:14px 4px 22px}
+.nav{margin-top:18px;color:var(--muted);font-size:12px}
+.nav a{display:block;color:#cfcfd4;text-decoration:none;padding:10px;border-radius:9px;margin:3px 0}
+.nav a:hover,.nav .active{background:#1b1b1f}
+.nav .active{border-left:2px solid var(--a)}
+.status{position:absolute;bottom:18px;color:#777;font-size:10px}
+.main{display:grid;grid-template-rows:58px 1fr auto;min-width:0}
+.top{border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px;gap:12px;background:#0b0b0dcc;backdrop-filter:blur(10px)}
+.model{color:#aaa;border:1px solid #303036;border-radius:999px;padding:5px 9px;font-size:11px}
+.engine{margin-left:auto;border:1px solid #303036;background:#18181b;color:#ddd;border-radius:9px;padding:7px 10px;text-decoration:none;font-size:11px}
+.chat{width:min(880px,92%);margin:auto;height:100%;overflow:auto;padding:30px 0 110px}
+.welcome{text-align:center;margin:15vh 0 20px}.welcome h1{font-size:32px;margin:0 0 10px}.welcome p{color:var(--muted)}
+.quick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.quick button{border:1px solid #303036;background:#151518;color:#ccc;border-radius:999px;padding:8px 12px;cursor:pointer}
+.m{max-width:780px;margin:18px auto;padding:12px 14px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.user{background:#18181b;border-radius:16px}.ai{border-left:2px solid var(--a)}
+.composer{width:min(880px,92%);margin:0 auto 18px;display:flex;gap:9px;border:1px solid #3a3a40;border-radius:18px;background:#151518;padding:9px;box-shadow:0 8px 30px #0008}
+.composer input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:10px;font:inherit}
+.composer button{border:0;border-radius:12px;background:var(--a);color:#09090b;font-weight:800;padding:0 17px;cursor:pointer}
+.composer button:disabled{opacity:.5;cursor:wait}
+@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.chat,.composer{width:94%}.engine{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<button class="new" id="newChat">＋ Neuer Chat</button>
+<div class="brand">Quantum.AI</div>
+<div class="nav">
+<a class="active">⌁ Chat</a>
+<a href="/engine">◈ Game Engine</a>
+<a href="#research">⌕ Recherche</a>
+<a href="#projects">▣ Projekte</a>
+<a href="/api/health" target="_blank">⚙ Systemstatus</a>
+</div>
+<div class="status">GPT-5.6 Sol · Reasoning · Web Search</div>
+</aside>
+<main class="main">
+<header class="top"><b>Quantum.AI</b><span class="model">GPT-5.6 Sol · High reasoning</span><a class="engine" href="/engine">Game Engine →</a></header>
+<section class="chat" id="chat">
+<div class="welcome" id="welcome">
+<h1>Wie kann ich helfen?</h1>
+<p>Recherche · Analyse · Coding · Mathematik · Projekte · Game Development</p>
+<div class="quick">
+<button data-q="Analysiere diese Aufgabe strukturiert und nenne mir die nächsten konkreten Schritte.">Analysieren</button>
+<button data-q="Hilf mir, ein sauberes, produktionsfähiges Programm zu bauen.">Programmieren</button>
+<button data-q="Recherchiere die aktuellen Fakten zu meinem Thema und kennzeichne Unsicherheiten.">Recherchieren</button>
+</div>
+</div>
+</section>
+<form class="composer" id="form">
+<input id="q" placeholder="Nachricht an Quantum.AI …" autocomplete="off">
+<button id="send">Senden</button>
+</form>
+</main>
+</div>
+<script>
+const form=document.getElementById('form'),q=document.getElementById('q'),chat=document.getElementById('chat'),welcome=document.getElementById('welcome'),send=document.getElementById('send'),newChat=document.getElementById('newChat');
+let sessionId=localStorage.getItem('quantum_ai_session')||crypto.randomUUID();
+localStorage.setItem('quantum_ai_session',sessionId);
+
+function add(text,role){
+ const e=document.createElement('div');e.className='m '+role;e.textContent=text;chat.appendChild(e);chat.scrollTop=chat.scrollHeight;return e;
+}
+function startClean(){Array.from(chat.querySelectorAll('.m')).forEach(e=>e.remove());welcome.style.display='block';q.focus();}
+async function resetChat(){
+ try{await fetch('/api/reset',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sessionId})})}catch(_){}
+ sessionId=crypto.randomUUID();localStorage.setItem('quantum_ai_session',sessionId);startClean();
+}
+newChat.onclick=resetChat;
+document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{q.value=b.dataset.q;q.focus()});
+form.onsubmit=async e=>{
+ e.preventDefault();
+ const text=q.value.trim();if(!text)return;
+ welcome.style.display='none';add(text,'user');q.value='';send.disabled=true;send.textContent='Denke …';
+ const pending=add('Quantum.AI arbeitet …','ai');
+ try{
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:sessionId,message:text})});
+  const d=await r.json();pending.remove();
+  if(d.session_id){sessionId=d.session_id;localStorage.setItem('quantum_ai_session',sessionId)}
+  add(d.response||d.answer||d.error||'Keine Antwort erhalten.','ai');
+ }catch(_){pending.remove();add('Verbindung fehlgeschlagen. Prüfe Render und den KI-Dienst.','ai')}
+ finally{send.disabled=false;send.textContent='Senden';q.focus()}
+};
+</script>
+</body>
+</html>
