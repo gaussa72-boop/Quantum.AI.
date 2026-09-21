@@ -1,12 +1,27 @@
-# Quantum.AI.
+# Quantum.AI
 
-Sammlung und Archiv der Quantum-/Meta-KI-Prototypen.
+Produktionsfähige Flask-Web-KI für Render.
 
-## Inhalt
-- `Mega-KI_Code.txt` – Projektnotiz
-- `meta_ki_mac_package.zip` – älteres Mac-Paket
-- `meta_ki_mac_package_v2.zip` – neuere Paketversion
-- `Projekte_Fortschritt.zip` – Projektstand/Archiv
-- `install_ultra_superki.sh.scpt` – Installations-/Automationsskript
+## Stack
+- Python 3.13
+- Flask + Gunicorn
+- OpenAI Responses API
+- optionale Websuche
+- persistente Browser-Sitzung über localStorage + session_id
+- Healthcheck unter /health
 
-Die vorhandenen Artefakte bleiben erhalten. Künftige ausführbare Quellen sollen als normale, nachvollziehbare Quelltexte ergänzt werden; Binär-/Archivdateien werden nicht als Quellcode behandelt.
+## Render
+Build: `pip install --upgrade pip && pip install -r requirements.txt`
+
+Start: `gunicorn --bind 0.0.0.0:$PORT app:app`
+
+Erforderlich:
+- `OPENAI_API_KEY`
+
+Optional:
+- `OPENAI_MODEL` = `gpt-5.6`
+- `OPENAI_REASONING_EFFORT` = `high`
+- `ENABLE_WEB_SEARCH` = `true`
+- `AI_ENABLED` = `true`
+
+API-Schlüssel werden ausschließlich in Render Environment Variables gespeichert.
