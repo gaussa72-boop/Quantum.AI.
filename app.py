@@ -66,7 +66,8 @@ def _security_headers(response):
     return response
 # --- End security hardening ---
 
-MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6").strip()
+MODEL = os.getenv("OPENAI_MODEL", "openai/gpt-5.6-luna")
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "").strip().strip()
 REASONING_EFFORT = os.getenv("OPENAI_REASONING_EFFORT", "high").strip().lower()
 WEB_SEARCH = os.getenv("ENABLE_WEB_SEARCH", "true").strip().lower() == "true"
 AI_ENABLED = os.getenv("AI_ENABLED", "true").strip().lower() == "true"
@@ -76,6 +77,7 @@ RATE_LIMIT_PER_MINUTE = max(5, min(int(os.getenv("RATE_LIMIT_PER_MINUTE", "30"))
 
 API_KEY = os.getenv("OPENAI_API_KEY", "").strip()
 client = OpenAI(api_key=API_KEY) if API_KEY else None
+router_client = OpenAI(api_key=OPENROUTER_API_KEY, base_url="https://openrouter.ai/api/v1") if OPENROUTER_API_KEY else None
 
 SYSTEM = """Du bist Quantum.AI, ein leistungsfähiger allgemeiner KI-Assistent für Recherche,
 Analyse, Programmierung, Mathematik, Schreiben und Projektarbeit.
@@ -166,7 +168,7 @@ def chat():
         return jsonify({"ok": False, "error": "Zu viele Anfragen. Bitte kurz warten."}), 429
 
     data = request.get_json(silent=True) or {}
-    message = str(data.get("message") or "").strip()
+    message = str(data.get("message") or "").strip()\n    selected_model = str(data.get("model") or MODEL).strip()
     if not message:
         return jsonify({"ok": False, "error": "message is required"}), 400
     if len(message) > MAX_INPUT_CHARS:
@@ -192,7 +194,7 @@ def chat():
         kwargs["reasoning"] = {"effort": REASONING_EFFORT}
 
     try:
-        response = client.responses.create(**kwargs)
+        response = (router_client.responses.create(**kwargs)
         answer = (response.output_text or "").strip() or "Ich konnte diesmal keine Textantwort erzeugen. Bitte versuche es erneut."
         final_history = (input_items + [{"role": "assistant", "content": answer}])[-MAX_HISTORY:]
         with sessions_lock:
