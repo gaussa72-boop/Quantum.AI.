@@ -168,7 +168,8 @@ def chat():
         return jsonify({"ok": False, "error": "Zu viele Anfragen. Bitte kurz warten."}), 429
 
     data = request.get_json(silent=True) or {}
-    message = str(data.get("message") or "").strip()\n    selected_model=str(data.get("model") or MODEL).strip()\n    selected_model = str(data.get("model") or MODEL).strip()
+    message = str(data.get("message") or "").strip()
+    selected_model = str(data.get("model") or MODEL).strip()
     if not message:
         return jsonify({"ok": False, "error": "message is required"}), 400
     if len(message) > MAX_INPUT_CHARS:
