@@ -5,6 +5,20 @@
 <title>Quantum.AI</title>
 <style>
 :root{--a:#8b7cff;--line:#272a33;--muted:#969ba8}*{box-sizing:border-box}html,body{margin:0;height:100%;background:radial-gradient(circle at 70% 0,#1a1734 0,#08090c 46%);color:#f3f4f6;font:14px Inter,system-ui,sans-serif}.app{height:100%;display:grid;grid-template-columns:250px 1fr}.side{border-right:1px solid var(--line);padding:14px;background:#0e1014e8}.new{width:100%;padding:11px;border:1px solid #343741;border-radius:10px;background:#181a20;color:#fff;text-align:left;cursor:pointer}.brand{font-weight:800;font-size:18px;margin:16px 4px 24px}.nav a{display:block;color:#d2d5dc;text-decoration:none;padding:10px;border-radius:9px;margin:3px 0}.nav .active{background:#1a1c22;border-left:2px solid var(--a)}.status{position:fixed;bottom:16px;color:#737986;font-size:10px}.main{display:grid;grid-template-rows:58px 1fr auto;min-width:0}.top{border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 22px;gap:12px;background:#0b0c10d9}.model{color:#aaa;border:1px solid #343741;border-radius:999px;padding:5px 9px;font-size:11px}.chat{width:min(900px,92%);margin:auto;height:100%;overflow:auto;padding:30px 0 110px}.welcome{text-align:center;margin:15vh 0 20px}.welcome h1{font-size:34px;margin:0 0 10px}.welcome p{color:var(--muted)}.quick{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.quick button{border:1px solid #343741;background:#15171c;color:#ccc;border-radius:999px;padding:8px 12px;cursor:pointer}.m{max-width:800px;margin:18px auto;padding:13px 15px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere}.user{background:#181a20;border-radius:16px}.ai{border-left:2px solid var(--a)}.composer{width:min(900px,92%);margin:0 auto 18px;display:flex;gap:9px;border:1px solid #3b3e48;border-radius:18px;background:#15171c;padding:9px}.composer input{flex:1;background:transparent;border:0;outline:0;color:#fff;padding:10px;font:inherit}.composer button{border:0;border-radius:12px;background:var(--a);color:#09090b;font-weight:800;padding:0 17px;cursor:pointer}.composer button:disabled{opacity:.5}@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.chat,.composer{width:94%}}
+
+/* Quantum.AI — individual cosmic core visual identity */
+:root{--a:#e9b96b;--line:rgba(226,188,123,.24);--muted:#aeb5c7}
+html,body{background:radial-gradient(ellipse at 50% 5%,rgba(103,64,150,.28),transparent 42%),radial-gradient(ellipse at 85% 80%,rgba(16,100,156,.15),transparent 38%),#050711}
+.side{background:linear-gradient(180deg,rgba(14,17,31,.97),rgba(7,9,18,.97));border-right-color:rgba(233,185,107,.25)}
+.brand{letter-spacing:.12em;text-transform:uppercase;color:#f6dba3;text-shadow:0 0 24px #d19b4a55}
+.new,.composer{background:linear-gradient(145deg,rgba(24,29,49,.96),rgba(10,13,24,.98));border-color:rgba(233,185,107,.36);box-shadow:0 8px 32px #0005}
+.nav .active{background:linear-gradient(90deg,#a873302b,transparent);border-left-color:#edc47e}
+.welcome h1{background:linear-gradient(100deg,#fff2cb,#e5b66b 55%,#b8c8ff);color:transparent;background-clip:text;-webkit-background-clip:text;text-shadow:0 0 32px #dba34b22}
+.quick button{border-color:#9c7c4b66;background:#131727;color:#e8d7b6}
+.composer button{background:linear-gradient(135deg,#ffe2a0,#c58a37);color:#17101a;box-shadow:0 0 22px #d8a24a44}
+.m.ai{border-left-color:#e9b96b}
+@media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.chat{width:94%;padding-top:18px}.welcome{margin:9vh 0 18px}.welcome h1{font-size:29px}}
+
 </style>
 </head>
 <body><div class="app"><aside class="side"><button class="new" id="newChat">＋ Neuer Chat</button><div class="brand">Quantum.AI</div><div class="nav"><a class="active" href="/">⌁ Chat</a><a href="/health" target="_blank">⚙ Systemstatus</a></div><div class="status">GPT-5.6 Sol · High reasoning · Web Search</div></aside>
