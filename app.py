@@ -144,7 +144,7 @@ def health():
         "status": "ok",
         "project": "Quantum.AI",
         "runtime": "python",
-        "model": selected_model,
+        "model": MODEL,
         "reasoning_effort": REASONING_EFFORT,
         "web_search": WEB_SEARCH,
         "ai_enabled": AI_ENABLED,
@@ -176,8 +176,8 @@ def chat():
         return jsonify({"ok": False, "error": f"Nachricht zu lang (max. {MAX_INPUT_CHARS} Zeichen)."}), 413
     if not AI_ENABLED:
         return jsonify({"ok": False, "error": "Quantum.AI ist deaktiviert (AI_ENABLED=false)."}), 503
-    if not client:
-        return jsonify({"ok": False, "error": "OPENAI_API_KEY ist auf Render nicht gesetzt."}), 503
+    if not (client or router_client):
+        return jsonify({"ok": False, "error": "OPENAI_API_KEY oder OPENROUTER_API_KEY ist auf Render nicht gesetzt."}), 503
 
     session_id, history = get_session(data.get("session_id"), data.get("history"))
     input_items = (history + [{"role": "user", "content": message}])[-MAX_HISTORY:]
@@ -195,7 +195,8 @@ def chat():
         kwargs["reasoning"] = {"effort": REASONING_EFFORT}
 
     try:
-        response = (router_client.responses.create(**kwargs)
+        active_client = router_client or client
+        response = active_client.responses.create(**kwargs)
         answer = (response.output_text or "").strip() or "Ich konnte diesmal keine Textantwort erzeugen. Bitte versuche es erneut."
         final_history = (input_items + [{"role": "assistant", "content": answer}])[-MAX_HISTORY:]
         with sessions_lock:
