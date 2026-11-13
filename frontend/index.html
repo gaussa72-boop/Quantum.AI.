@@ -33,7 +33,19 @@ input:focus,textarea:focus,select:focus,button:focus-visible,a:focus-visible{out
 button,a{transition:transform .18s ease,box-shadow .18s ease}button:hover{transform:translateY(-1px)}
 @media(max-width:760px){.app,.workspace,.layout{display:block!important;width:100%!important}.sidebar{width:100%!important;position:relative!important}.main,.content{width:100%!important;min-width:0!important;padding:14px!important}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
-</style></head>
+</style>
+<style id="ultima-visual-performance">
+:root{--u-accent:#9b8cff;--u-cyan:#70e7ef;--u-line:rgba(255,255,255,.12)}
+html{scroll-behavior:smooth}body{overflow-x:hidden;background:radial-gradient(ellipse at 50% -20%,rgba(126,100,255,.18),transparent 55%),#08090c}
+.side,.top{background:rgba(12,14,20,.84);backdrop-filter:blur(18px)}
+.chat{max-width:900px}.m{overflow-wrap:anywhere;border-radius:15px}
+button,input,textarea,select{font:inherit;transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
+button:hover{transform:translateY(-1px)}
+input:focus,textarea:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--u-cyan);outline-offset:3px}
+@media(max-width:720px){.app{height:100dvh;grid-template-columns:1fr;grid-template-rows:auto 1fr}.side{max-height:125px;overflow:auto;border-right:0;border-bottom:1px solid var(--line)}.main{min-height:0}.chat{width:calc(100% - 24px);padding:18px 0 90px}.welcome{margin:7vh 0 20px}.top{padding-inline:14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
 <body><div class="app"><aside class="side"><button class="new" id="newChat">＋ Neuer Chat</button><div class="brand">Quantum.AI</div><div class="nav"><a class="active" href="/">⌁ Chat</a><a href="/health" target="_blank">⚙ Systemstatus</a></div><div class="status">Modellstatus wird geladen</div></aside>
 <main class="main"><header class="top"><b>Quantum.AI</b><span class="model">Modellstatus wird geladen</span></header>
 <section class="chat" id="chat"><div class="welcome" id="welcome"><h1>Wie kann ich helfen?</h1><p>Recherche · Analyse · Coding · Mathematik · Projekte</p><div class="quick"><button data-q="Analysiere diese Aufgabe strukturiert und nenne mir die nächsten konkreten Schritte.">Analysieren</button><button data-q="Hilf mir, ein sauberes, produktionsfähiges Programm zu bauen.">Programmieren</button><button data-q="Recherchiere die aktuellen Fakten zu meinem Thema und kennzeichne Unsicherheiten.">Recherchieren</button></div></div></section>
