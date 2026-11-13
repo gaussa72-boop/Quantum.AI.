@@ -64,4 +64,8 @@ fetch(API_BASE+'/api/health',{cache:'no-store'}).then(r=>r.json()).then(x=>{
 const label=(x.provider==='openrouter'?'OpenRouter':'OpenAI')+' · '+x.model+(x.reasoning_effort?' · '+x.reasoning_effort+' reasoning':'');
 document.querySelectorAll('.model,.status').forEach(el=>el.textContent=label+(x.ai_enabled?'':' · KI deaktiviert'));
 }).catch(()=>{document.querySelectorAll('.model,.status').forEach(el=>el.textContent='KI-Status nicht verfügbar')});
-</script></body></html>
+</script>
+<!-- ULTIMA Membership & Credits -->
+<script src="https://ultima-membership-api.onrender.com/membership-widget.js"></script>
+<script>(function(){var sites={"quantum-ai-zeah.onrender.com":["quantum-ai","Quantum.AI"],"quantum-ai-renewed.onrender.com":["quantum-ai-one","Quantum AI-One"],"quantumai-chat.onrender.com":["quantumai-chat","QuantumAI Chat"]};var entry=sites[location.hostname];if(entry&&window.UltimaMembership)window.UltimaMembership.init({siteSlug:entry[0],brand:entry[1]});})();</script>
+</body></html>
