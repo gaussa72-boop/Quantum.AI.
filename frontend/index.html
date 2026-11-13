@@ -19,6 +19,15 @@ html,body{background:radial-gradient(ellipse at 50% 5%,rgba(103,64,150,.28),tran
 .m.ai{border-left-color:#e9b96b}
 @media(max-width:700px){.app{grid-template-columns:1fr}.side{display:none}.chat{width:94%;padding-top:18px}.welcome{margin:9vh 0 18px}.welcome h1{font-size:29px}}
 
+
+/* ULTIMA chat experience quality pass */
+body{font-feature-settings:"ss01" on;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.side{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.chat{overscroll-behavior:contain;scrollbar-gutter:stable}
+.m{contain:layout style}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid #b7a8ff;outline-offset:3px}
+@media(max-width:760px){.app{grid-template-columns:1fr;height:100dvh}.side{display:none}.main{grid-template-rows:56px minmax(0,1fr) auto}.chat{width:calc(100% - 24px);padding:18px 0 96px}.welcome{margin:8vh 0 18px}.welcome h1{font-size:clamp(26px,8vw,36px)}.composer{width:calc(100% - 20px);margin-bottom:max(10px,env(safe-area-inset-bottom));border-radius:16px}.top{padding:0 14px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 
 <style id="ultima-2026-quantum-ai">
