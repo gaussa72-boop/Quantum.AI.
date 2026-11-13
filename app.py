@@ -9,6 +9,18 @@ from openai import OpenAI
 
 app = Flask(__name__)
 
+ALLOWED_FRONTEND_ORIGINS = {"https://quantumai-chat.onrender.com"}
+
+@app.after_request
+def cors_headers(response):
+    origin = request.headers.get("Origin", "")
+    if origin in ALLOWED_FRONTEND_ORIGINS:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+        response.headers["Vary"] = "Origin"
+    return response
+
 # SECURITY HARDENING
 _SEC_RATE_LIMIT={}
 from time import monotonic
