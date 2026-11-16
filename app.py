@@ -212,7 +212,10 @@ def chat():
             if WEB_SEARCH:
                 kwargs["tools"] = [{"type": "web_search", "search_context_size": "medium"}]
                 kwargs["tool_choice"] = "auto"
-            if REASONING_EFFORT in {"low", "medium", "high", "xhigh", "max"}:
+            # The Responses API only accepts reasoning settings for reasoning-capable models.
+            # The default gpt-4o-mini model does not support this parameter.
+            reasoning_model = MODEL.startswith(("gpt-5", "gpt-6", "o1", "o3", "o4"))
+            if reasoning_model and REASONING_EFFORT in {"low", "medium", "high", "xhigh", "max"}:
                 kwargs["reasoning"] = {"effort": REASONING_EFFORT}
             response = ACTIVE_CLIENT.responses.create(**kwargs)
             answer = (response.output_text or "").strip()
