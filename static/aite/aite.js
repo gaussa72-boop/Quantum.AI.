@@ -1,6 +1,9 @@
 (function(){
 'use strict';if(window.__AITE_V2__)return;window.__AITE_V2__=true;
 const cfg=window.AITE_CONFIG||{},site=document.title||location.hostname,key='aite-v2-'+location.hostname;
+const siteSlugs={"novatube-a10l.onrender.com":"novatube","quantum-ai-zeah.onrender.com":"quantum-ai","ki-game-mod.onrender.com":"ki-game-mod","note-ki.onrender.com":"note-ki","ipad-app-ionos-7.onrender.com":"ipad-app-ionos-7","galactic-ai-v3.onrender.com":"galactic-ai-v3","quantum-super-intelligence.onrender.com":"quantum-super-intelligence","ionos-8.onrender.com":"ionos-8","quantum-ki-cat-chat.onrender.com":"quantum-ki-cat-chat","ai-quantumlight.onrender.com":"ai-quantumlight","quantenformel.onrender.com":"quantenformel","quantum-singularity.onrender.com":"quantum-singularity","ionos-ai.onrender.com":"ionos-ai","rea-signature.onrender.com":"rea-signature","quantum-ai-renewed.onrender.com":"quantum-ai-one","quantum-ki-ultra-pro-v2-renewed.onrender.com":"quantum-ki-ultra-pro-v2-renewed","quantum-mirror-wonderland.onrender.com":"quantum-mirror-wonderland","ionos-ki.onrender.com":"ionos-ki","ionos-7.onrender.com":"ionos-7","ultraki-ai.onrender.com":"ultraki-ai","ultra-ki-v2.onrender.com":"ultra-ki-v2","quantum-ki-ultra-pro-v2.onrender.com":"quantum-ki-ultra-pro-v2","quantumai-chat.onrender.com":"quantumai-chat","aurelis-creative-ai-studio.onrender.com":"aurelis-creative-ai-studio","ate-rea-characterverse.onrender.com":"ate-rea-characterverse","neuroforge-2035.onrender.com":"neuroforge"};
+const siteSlug=cfg.siteSlug||siteSlugs[location.hostname]||"";
+const apiBase=(cfg.apiBase||"https://ultima-membership-api.onrender.com").replace(/\/$/,"");
 const css=`
 #aite-launch{position:fixed;right:22px;bottom:22px;z-index:2147483000;width:62px;height:62px;border:1px solid #d9c58b;border-radius:50%;color:#fff;background:radial-gradient(circle,#fff0c2 0 2%,#c5a75f 5%,#302a48 23%,#10182a 57%,#050811 76%);box-shadow:0 0 24px #d0ae6755,0 0 70px #8a8dff22;cursor:pointer;font:700 19px Georgia,serif}
 #aite-launch:before,#aite-launch:after{content:"";position:absolute;inset:-7px;border:1px solid #c8b07866;border-radius:50%;animation:aite-spin 14s linear infinite}#aite-launch:after{inset:7px;border-style:dotted;animation-duration:9s;animation-direction:reverse}@keyframes aite-spin{to{transform:rotate(360deg)}}
@@ -17,7 +20,7 @@ const css=`
 const st=document.createElement('style');st.textContent=css;document.head.appendChild(st);
 const launch=document.createElement('button');launch.id='aite-launch';launch.type='button';launch.setAttribute('aria-label','AITE öffnen');launch.textContent='A';
 const panel=document.createElement('section');panel.id='aite-panel';panel.setAttribute('aria-label','AITE Assistent');
-panel.innerHTML='<header id="aite-head"><div id="aite-sigil">✧</div><div><div id="aite-title">AITE · Sternensingularität</div><div id="aite-sub">Local-first · dein KI-Begleiter</div></div><button id="aite-close" aria-label="Schließen">×</button></header><div id="aite-controls"><select id="aite-persona" aria-label="Gesprächsprofil"></select><select id="aite-engine" aria-label="KI-Modus"><option value="local">Lokal / Offline</option><option value="openai">OpenAI optional</option></select></div><div id="aite-status">Prüfe lokalen KI-Dienst …</div><div id="aite-messages" aria-live="polite"></div><form id="aite-form"><textarea id="aite-input" rows="1" placeholder="Schreibe AITE …"></textarea><button id="aite-send" type="submit">Senden</button></form><div id="aite-foot">Lokal gespeicherter Verlauf · spirituelle Inhalte sind Reflexionsangebote</div>';
+panel.innerHTML='<header id="aite-head"><div id="aite-sigil">✧</div><div><div id="aite-title">AITE · Sternensingularität</div><div id="aite-sub">Local-first · dein KI-Begleiter</div></div><button id="aite-close" aria-label="Schließen">×</button></header><div id="aite-controls"><select id="aite-persona" aria-label="Gesprächsprofil"></select><select id="aite-engine" aria-label="KI-Modus"><option value="auto">Auto · Lokal dann Online</option><option value="local">Lokal / Offline</option><option value="openai">Online · ULTIMA KI</option></select></div><div id="aite-status">Prüfe lokalen KI-Dienst …</div><div id="aite-messages" aria-live="polite"></div><form id="aite-form"><textarea id="aite-input" rows="1" placeholder="Schreibe AITE …"></textarea><button id="aite-send" type="submit">Senden</button></form><div id="aite-foot">Lokal gespeicherter Verlauf · spirituelle Inhalte sind Reflexionsangebote</div>';
 document.body.append(launch,panel);
 const $=id=>panel.querySelector('#'+id),messages=$('aite-messages'),status=$('aite-status'),input=$('aite-input'),engine=$('aite-engine');
 const modes=[['compass','Bewusstseinskompass'],['dharma','Ate Rea · Dharma'],['light','Lichtpfad'],['archetypes','Archetypen'],['creator','Schöpfergeist'],['tech','Technologie-Agent']];
@@ -28,9 +31,66 @@ history.forEach(m=>add(m.role,m.content,false));
 if(!history.length)add('assistant','Ich bin AITE. Ich bewahre die spirituelle Identität und die Themen dieser Website: '+site+'. Wähle ein Profil und stelle deine Frage.');
 launch.onclick=()=>panel.classList.toggle('open');$('aite-close').onclick=()=>panel.classList.remove('open');
 function fallback(q){const mode=sel.value;const replies={dharma:'Ate-Rea-Reflexion: Beobachte zuerst, was tatsächlich geschieht. Unterscheide Wahrnehmung von Interpretation und wähle einen kleinen nächsten Schritt, der Mitgefühl und Klarheit verbindet.',light:'Lichtpfad-Reflexion: Welche Qualität ist jetzt hilfreich – Wahrhaftigkeit, Mut, Geduld, Mitgefühl oder Klarheit? Übersetze sie in eine konkrete Handlung.',archetypes:'Symbolische Spiegelung: Welcher Archetyp hilft dir, die Situation neu zu betrachten – Weise, Hüter, Wanderer oder Schöpfer? Das ist eine Metapher zur Selbstreflexion, keine übernatürliche Feststellung.',creator:'Schöpfermodus: Lass uns Vision, kleinsten Prototyp und überprüfbaren nächsten Schritt trennen. Was soll am Ende konkret funktionieren?',tech:'Technologie-Agent: Beschreibe Ziel, aktuellen Stand und Fehlermeldung. Wir prüfen Architektur, Datenfluss, Sicherheit, Oberfläche, Tests und Deployment.',compass:'Kompass: Was weißt du sicher, was vermutest du, was ist dir wichtig und welcher kleine nächste Schritt ist überprüfbar?'};return (replies[mode]||replies.compass)+'\n\n[Offline-Fallback aktiv. Für ausführliche generative Antworten muss ein lokales Sprachmodell laufen.]'}
-async function local(q){const url=cfg.localEndpoint||'http://127.0.0.1:8766/api/chat';const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:cfg.localModel||'qwen2.5:3b',messages:[{role:'system',content:'Du bist AITE, ein hochwertiger deutschsprachiger Assistent. Gesprächsprofil: '+sel.value+'. Website: '+site+'. Bewahre die Identität und spirituellen Eigenschaften dieser Website als symbolische Reflexionshilfe. Antworte präzise, tiefgründig, praktisch, transparent und ohne erfundene Tatsachen.'},...history.slice(0,-1).slice(-14),{role:'user',content:q}],stream:false,options:{temperature:.65}})});if(!r.ok)throw Error('Lokaler AITE-Bridge-Dienst antwortet nicht ('+r.status+')');const data=await r.json();if(!data.message?.content)throw Error('Das lokale Modell lieferte keine Antwort');return data.message.content}
-async function online(q){if(typeof cfg.openAIRequest==='function')return await cfg.openAIRequest(q,history.slice(-14),{persona:sel.value,site});throw Error('OpenAI ist hier noch nicht über einen geschützten Server-Endpunkt angebunden.')}
-$('aite-form').addEventListener('submit',async e=>{e.preventDefault();const q=input.value.trim();if(!q)return;input.value='';add('user',q);$('aite-send').disabled=true;try{let a;if(engine.value==='openai'){status.textContent='Optionaler Online-Modus …';a=await online(q)}else{status.textContent='Verbinde mit lokalem Modell …';try{a=await local(q);status.textContent='Lokale KI aktiv · kein OpenAI-Guthaben verwendet'}catch(err){a=fallback(q);status.textContent='Offline-Fallback · lokaler Modellserver nicht erreichbar'}}add('assistant',a)}catch(err){add('assistant','Der gewählte Modus ist nicht verfügbar: '+err.message);status.textContent='Verbindung nicht verfügbar'}finally{$('aite-send').disabled=false;input.focus()}});
-async function probe(){try{const r=await fetch((cfg.healthEndpoint||'http://127.0.0.1:8766/health'),{cache:'no-store'});if(r.ok){const d=await r.json();status.textContent=d.installed?'Lokale KI bereit · '+(d.model||'Ollama')+' · offline-fähig':'Ollama läuft, aber '+(d.model||'das Modell')+' fehlt noch · Setup ausführen'}else throw Error()}catch{status.textContent=navigator.onLine?'Lokaler Modellserver nicht gefunden · Offline-Fallback bereit':'Offline · Reflexionshilfe bereit; lokale KI benötigt den gestarteten Modellserver'}}
-probe();window.addEventListener('online',probe);window.addEventListener('offline',probe);
+async function local(q){
+ const url=cfg.localEndpoint||"http://127.0.0.1:8766/api/chat";
+ const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+  model:cfg.localModel||"qwen2.5:3b",
+  messages:[{role:"system",content:"Du bist AITE, ein hochwertiger deutschsprachiger Assistent. Gesprächsprofil: "+sel.value+". Website: "+site+". Bewahre Identität und Charakter dieser Website als symbolische Reflexionshilfe. Antworte präzise, praktisch, transparent und ohne erfundene Tatsachen."},...history.slice(0,-1).slice(-14),{role:"user",content:q}],
+  stream:false,options:{temperature:.65}
+ })});
+ if(!r.ok)throw Error("Lokale AITE-Bridge antwortet nicht (HTTP "+r.status+").");
+ const data=await r.json();if(!data.message?.content)throw Error("Das lokale Modell lieferte keine Antwort.");return data.message.content;
+}
+async function online(q){
+ if(typeof cfg.openAIRequest==="function")return await cfg.openAIRequest(q,history.slice(-14),{persona:sel.value,site});
+ if(!siteSlug)throw Error("Diese Website ist noch keiner ULTIMA-KI-Site zugeordnet.");
+ const token=sessionStorage.getItem("ultima-session:"+siteSlug);
+ if(!token)throw Error("Bitte zuerst über „Mein Konto“ bei ULTIMA anmelden, damit die geschützte Online-KI genutzt werden kann.");
+ const response=await fetch(apiBase+"/api/"+encodeURIComponent(siteSlug)+"/copilot",{
+  method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},
+  body:JSON.stringify({message:"Du bist AITE, die eigenständige KI dieser Website. Bewahre den Charakter und die Persona "+sel.value+". Website-Kontext: "+site+". Antworte als AITE und beachte folgende Anfrage: "+q,history:history.slice(-14)})
+ });
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw Error(data.error||("Online-KI nicht verfügbar (HTTP "+response.status+")."));
+ if(!data.answer)throw Error("Die Online-KI hat keine Antwort geliefert.");
+ return data.answer;
+}
+$('aite-form').addEventListener('submit',async e=>{
+ e.preventDefault();const q=input.value.trim();if(!q)return;
+ input.value='';add('user',q);$('aite-send').disabled=true;
+ try{
+  let answer;
+  if(engine.value==="local"){
+   status.textContent="Verbinde mit lokalem Sprachmodell …";
+   try{answer=await local(q);status.textContent="Lokales Sprachmodell aktiv · offline";}
+   catch(err){answer=fallback(q);status.textContent="Offline-Fallback aktiv · "+err.message;}
+  }else if(engine.value==="openai"){
+   status.textContent="Verbinde mit geschützter ULTIMA-Online-KI …";
+   try{answer=await online(q);status.textContent="Online-KI aktiv · ULTIMA Copilot";}
+   catch(err){answer=fallback(q)+"\n\n[Online-KI nicht erreichbar: "+err.message+"]";status.textContent="Online nicht verfügbar · Fallback aktiv";}
+  }else{
+   status.textContent="Auto-Modus · suche lokales Sprachmodell …";
+   try{answer=await local(q);status.textContent="Lokales Sprachmodell aktiv · offline";}
+   catch(localError){
+    status.textContent="Lokales Modell nicht erreichbar · versuche Online-KI …";
+    try{answer=await online(q);status.textContent="Online-KI aktiv · ULTIMA Copilot";}
+    catch(onlineError){answer=fallback(q)+"\n\n[Lokales und Online-Modell nicht verfügbar. "+onlineError.message+"]";status.textContent="Offline-Fallback aktiv · beide Modellverbindungen nicht verfügbar";}
+   }
+  }
+  add('assistant',answer);
+ }catch(err){
+  add('assistant',fallback(q)+"\n\n[Fallback: "+err.message+"]");
+  status.textContent="Fallback aktiv";
+ }finally{$('aite-send').disabled=false;input.focus()}
+});
+async function probe(){
+ try{
+  const r=await fetch((cfg.healthEndpoint||"http://127.0.0.1:8766/health"),{cache:"no-store"});
+  if(r.ok){const d=await r.json();status.textContent=d.installed?"Lokale KI bereit · "+(d.model||"Ollama")+" · offline-fähig":"Bridge erreichbar · "+(d.model||"Modell")+" noch nicht installiert · Setup ausführen";return}
+  throw Error();
+ }catch{
+  status.textContent=navigator.onLine?"Lokales Modell nicht gefunden · Auto-Modus versucht die Online-KI nach Anmeldung":"Offline-Fallback bereit · lokales Modell benötigt den gestarteten Bridge-Dienst";
+ }
+}
+probe();window.addEventListener("online",probe);window.addEventListener("offline",probe);
 })();
