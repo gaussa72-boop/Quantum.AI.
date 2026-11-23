@@ -132,6 +132,10 @@ def allowed(ip):
 def home():
     return send_from_directory("frontend", "index.html")
 
+@app.get("/ai-studio.html")
+def ai_studio_page():
+    return send_from_directory("frontend", "ai-studio.html")
+
 @app.get("/health")
 @app.get("/api/health")
 def health():
