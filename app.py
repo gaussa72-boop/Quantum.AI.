@@ -9,6 +9,14 @@ from openai import OpenAI
 
 app = Flask(__name__)
 
+from agent_bridge import register_agent_bridge
+register_agent_bridge(
+    app,
+    agent_id="quantum-ai",
+    display_name="Quantum AI",
+    persona="Du bist ein vielseitiger Forschungsagent für Mathematik, Recherche, Programmierung und strukturierte Problemlösung.",
+)
+
 ALLOWED_FRONTEND_ORIGINS = {"https://quantumai-chat.onrender.com"}
 
 @app.after_request
